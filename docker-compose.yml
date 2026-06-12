@@ -1,0 +1,48 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    container_name: skill-checker-backend
+    ports:
+      - "${BACKEND_PORT}:8000"
+    volumes:
+      - ./backend:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - db
+    tty: true
+    command: php artisan serve --host=0.0.0.0 --port=8000
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./docker/node/Dockerfile
+    container_name: skill-checker-frontend
+    ports:
+      - "${FRONTEND_PORT}:5173"
+    volumes:
+      - ./frontend:/app
+    working_dir: /app
+    depends_on:
+      - backend
+    tty: true
+    command: npm run dev -- --host
+
+  db:
+    image: mysql:8.0
+    container_name: skill-checker-db
+    ports:
+      - "${DB_PORT}:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      TZ: Asia/Tokyo
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
