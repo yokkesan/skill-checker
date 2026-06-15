@@ -29,4 +29,13 @@ class RepositoryController extends Controller
             'repository' => $repository
         ], 201);
     }
+
+    public function index()
+    {
+        $repositories = Repository::all();
+
+        return response()->json([
+            'repositories' => $repositories
+        ]);
+    }
 }

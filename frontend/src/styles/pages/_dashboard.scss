@@ -1,0 +1,51 @@
+.dashboard {
+    padding: 40px;
+    background: #f5f5f5;
+    min-height: 100vh;
+
+    &__title {
+        margin-bottom: 24px;
+    }
+
+    &__top {
+        display: flex;
+        gap: 24px;
+        margin-bottom: 24px;
+    }
+
+    &__contribution {
+        margin-bottom: 24px;
+    }
+}
+
+.dashboard-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    &__title {
+        margin-bottom: 16px;
+    }
+
+    &--score {
+        flex: 2;
+    }
+
+    &--github {
+        flex: 1;
+    }
+}
+
+.repository-card {
+    padding: 16px 0;
+    border-bottom: 1px solid #eee;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &__title {
+        margin-bottom: 8px;
+    }
+}

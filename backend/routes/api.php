@@ -8,3 +8,8 @@ Route::post(
     '/repositories',
     [RepositoryController::class, 'store']
 );
+
+Route::get(
+    '/repositories',
+    [RepositoryController::class, 'index']
+);
