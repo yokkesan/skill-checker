@@ -23,69 +23,43 @@ function RepositoryList() {
     }, []);
 
     return (
-        <section className="dashboard-card dashboard__repository">
-            <h2 className="dashboard-card__title">
-                Repository List
-            </h2>
+    <section className="dashboard-card dashboard__repository">
+        <h2 className="dashboard-card__title">
+            Repository List
+        </h2>
 
-            {repositories.map((repository) => (
-                <div
-                    key={repository.id}
-                    className="repository-card"
-                >
-                    <h3 className="repository-card__title">
-                        {repository.repository_name}
-                    </h3>
-
-                    <p>
-                        {repository.github_url}
-                    </p>
-
-                    <p>
-                        branch:
-                        {' '}
-                        {repository.branch_name}
-                    </p>
-
-                    <p>
-                        status:
-                        {' '}
-                        {repository.status}
-                    </p>
-
-                    <button>
-                        詳細を見る
-                    </button>
-                </div>
-            ))}
-
-            <div className="repository-card">
+        {repositories.map((repository) => (
+            <div
+                key={repository.id}
+                className="repository-card"
+            >
                 <h3 className="repository-card__title">
-                    skill-checker
+                    {repository.repository_name}
                 </h3>
 
-                <p>Laravel / React / TypeScript</p>
-                <p>偏差値 82</p>
+                <p>
+                    {repository.github_url}
+                </p>
+
+                <p>
+                    branch:
+                    {' '}
+                    {repository.branch_name}
+                </p>
+
+                <p>
+                    status:
+                    {' '}
+                    {repository.status}
+                </p>
 
                 <button>
                     詳細を見る
                 </button>
             </div>
-
-            <div className="repository-card">
-                <h3 className="repository-card__title">
-                    tora-tere
-                </h3>
-
-                <p>Rails / React</p>
-                <p>偏差値 74</p>
-
-                <button>
-                    詳細を見る
-                </button>
-            </div>
-        </section>
-    );
+        ))}
+    </section>
+);
 }
 
 export default RepositoryList;
