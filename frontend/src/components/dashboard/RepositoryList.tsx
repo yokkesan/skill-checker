@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import type { Repository } from '../../types/repository';
 
 function RepositoryList() {
@@ -23,7 +22,6 @@ function RepositoryList() {
             });
     }, []);
 
-function RepositoryList() {
     return (
         <section className="dashboard-card dashboard__repository">
             <h2 className="dashboard-card__title">
@@ -60,13 +58,13 @@ function RepositoryList() {
                     </button>
                 </div>
             ))}
+
             <div className="repository-card">
                 <h3 className="repository-card__title">
                     skill-checker
                 </h3>
 
                 <p>Laravel / React / TypeScript</p>
-
                 <p>偏差値 82</p>
 
                 <button>
@@ -80,7 +78,6 @@ function RepositoryList() {
                 </h3>
 
                 <p>Rails / React</p>
-
                 <p>偏差値 74</p>
 
                 <button>
