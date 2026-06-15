@@ -4,6 +4,7 @@ import SkillScoreCard from '../components/dashboard/SkillScoreCard';
 import GithubStatsCard from '../components/dashboard/GithubStatsCard';
 import ContributionChart from '../components/dashboard/ContributionChart';
 import RepositoryList from '../components/dashboard/RepositoryList';
+import RepositoryForm from '../components/dashboard/RepositoryForm';
 
 function Dashboard() {
     return (
@@ -19,6 +20,8 @@ function Dashboard() {
             </div>
 
             <ContributionChart />
+
+            <RepositoryForm />
 
             <RepositoryList />
         </div>
