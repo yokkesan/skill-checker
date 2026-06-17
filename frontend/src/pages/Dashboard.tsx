@@ -44,7 +44,7 @@ function Dashboard() {
             </h1>
 
             <div className="dashboard__top">
-                <SkillScoreCard />
+                <SkillScoreCard repositories={ repositories } />
 
                 <GithubStatsCard />
             </div>
