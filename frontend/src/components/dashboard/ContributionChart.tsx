@@ -1,64 +1,29 @@
-import type { Repository }
-    from '../../types/repository';
-
 type Props = {
-    repositories:
-        Repository[];
+    contributions: Record<string, number>;
 };
 
 function ContributionChart({
-    repositories,
+    contributions,
 }: Props) {
 
-    const contributionMap =
-        repositories.reduce<
-            Record<string, number>
-        >(
-            (
-                result,
-                repository
-            ) => {
+    const days = [];
 
-                if (
-                    ! repository.updated_at
-                ) {
-                    return result;
-                }
+    for (let i = 89; i >= 0; i--) {
+        const date = new Date();
 
-                const date =
-                    repository.updated_at
-                        .slice(0, 10);
-
-                result[date] =
-                    (
-                        result[date]
-                        ?? 0
-                    ) + 1;
-
-                return result;
-            },
-            {}
+        date.setDate(
+            date.getDate() - i
         );
 
-    const days =
-        Array.from({
-            length: 120
-        }).map((_, index) => {
+        const dateString =
+            date.toISOString().split('T')[0];
 
-            const date =
-                new Date();
-
-            date.setDate(
-                date.getDate()
-                - (
-                    119 - index
-                )
-            );
-
-            return date
-                .toISOString()
-                .slice(0, 10);
+        days.push({
+            date: dateString,
+            count:
+                contributions[dateString] ?? 0,
         });
+    }
 
     return (
         <section className="dashboard-card dashboard__contribution">
@@ -67,33 +32,21 @@ function ContributionChart({
             </h2>
 
             <div className="contribution-chart">
-                {
-                    days.map((day) => {
-
-                        const count =
-                            contributionMap[
-                                day
-                            ] ?? 0;
-
-                        const level =
-                            Math.min(
-                                count,
-                                4
-                            );
-
-                        return (
-                            <div
-                                key={day}
-                                className={
-                                    `contribution-chart__cell contribution-chart__cell--level-${level}`
-                                }
-                                title={
-                                    `${day}: ${count}`
-                                }
-                            />
+                {days.map((day) => {
+                    const level =
+                        Math.min(
+                            day.count,
+                            4
                         );
-                    })
-                }
+
+                    return (
+                        <div
+                            key={day.date}
+                            className={`contribution-chart__cell contribution-chart__cell--level-${level}`}
+                            title={`${day.date}: ${day.count} commits`}
+                        />
+                    );
+                })}
             </div>
         </section>
     );

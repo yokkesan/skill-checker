@@ -14,6 +14,9 @@ function Dashboard() {
     const [repositories, setRepositories] =
         useState<Repository[]>([]);
 
+    const [contributions, setContributions] =
+    useState<Record<string, number>>({});
+
     const fetchRepositories =
         async () => {
             try {
@@ -25,9 +28,9 @@ function Dashboard() {
                 const data =
                     await response.json();
 
-                setRepositories(
-                    data.repositories
-                );
+                setRepositories( data.repositories );
+
+                setContributions( data.contributions );
             } catch (error) {
                 console.error(error);
             }
@@ -49,7 +52,7 @@ function Dashboard() {
                 <GithubStatsCard repositories={ repositories } />
             </div>
 
-            <ContributionChart repositories={ repositories } />
+            <ContributionChart contributions={ contributions } />
 
             <RepositoryForm
                 onSuccess={
