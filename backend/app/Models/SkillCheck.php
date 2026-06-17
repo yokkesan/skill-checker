@@ -11,7 +11,11 @@ class SkillCheck extends Model
     protected $fillable = [
         'repository_id',
         'total_score',
-        'comment'
+        'comment',
+        'score',
+        'status',
+        'started_at',
+        'finished_at',
     ];
 
     public function repository(): BelongsTo
