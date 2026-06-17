@@ -10,55 +10,28 @@ use App\Services\SkillScoreService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
-class RepositoryController
-    extends Controller
+class RepositoryController extends Controller
 {
     public function __construct(
-        private GithubRepositoryService
-            $githubService,
-
-        private SkillScoreService
-            $scoreService
+        private GithubRepositoryService $githubService,
+        private SkillScoreService $scoreService
     ) {}
 
-    public function store(
-        Request $request
-    )
+    public function store(Request $request)
     {
         $request->validate([
-            'github_url' => [
-                'required',
-                'url'
-            ],
-
-            'repository_name' => [
-                'required',
-                'string'
-            ],
-
-            'branch_name' => [
-                'nullable',
-                'string'
-            ]
+            'github_url' => ['required', 'url'],
+            'repository_name' => ['required', 'string'],
+            'branch_name' => ['nullable', 'string']
         ]);
 
-        $repository =
-            Repository::create([
-                'user_id' => 1,
-
-                'github_url' =>
-                    $request->github_url,
-
-                'repository_name' =>
-                    $request->repository_name,
-
-                'branch_name' =>
-                    $request->branch_name
-                    ?? 'main',
-
-                'status' =>
-                    'pending'
-            ]);
+        $repository = Repository::create([
+            'user_id' => 1,
+            'github_url' => $request->github_url,
+            'repository_name' => $request->repository_name,
+            'branch_name' => $request->branch_name ?? 'main',
+            'status' => 'pending'
+        ]);
 
         $githubRepository =
             $this->githubService
@@ -73,63 +46,79 @@ class RepositoryController
                 );
 
         SkillCheck::create([
-            'repository_id' =>
-                $repository->id,
-
-            'total_score' =>
-                $totalScore,
-
-            'comment' =>
-                '解析開始',
-
-            'status' =>
-                'processing',
-
-            'started_at' =>
-                now(),
+            'repository_id' => $repository->id,
+            'total_score' => $totalScore,
+            'comment' => '解析開始',
+            'status' => 'processing',
+            'started_at' => now(),
         ]);
 
         return response()->json([
-            'message' =>
-                'Repository created',
-
-            'repository' =>
-                $repository
+            'message' => 'Repository created',
+            'repository' => $repository
         ], 201);
     }
+
 
     public function index()
     {
         $repositories =
             Repository::all();
 
+        $githubRepositories = [];
+        $contributions = [];
+
+        foreach ($repositories as $repository) {
+
+            $githubRepositories[$repository->id] =
+                $this->githubService
+                ->getRepository(
+                    $repository->github_url
+                );
+
+            $commits =
+                $this->githubService
+                ->getCommits(
+                    $repository->github_url
+                );
+
+            foreach ($commits as $commit) {
+
+                $date = substr( $commit['commit']['author']['date'], 0, 10 );
+
+                $contributions[$date] = ($contributions[$date] ?? 0) + 1;
+            }
+        }
+
         $this->syncSkillChecks(
-            $repositories
+            $repositories,
+            $githubRepositories
         );
 
         return response()->json([
             'repositories' =>
-                $this
-                    ->formatRepositories(
-                        $repositories
-                    )
+            $this->formatRepositories(
+                $repositories,
+                $githubRepositories
+            ),
+
+            'contributions' =>$contributions
         ]);
     }
 
-    private function
-    syncSkillChecks(
-        Collection $repositories
+    private function syncSkillChecks(
+        Collection $repositories,
+        array $githubRepositories
     ): void
     {
         $repositories->each(
-            function ($repository) {
+            function ($repository)
+            use ($githubRepositories) {
 
                 $githubRepository =
-                    $this->githubService
-                        ->getRepository(
-                            $repository
-                                ->github_url
-                        );
+                    $githubRepositories[
+                        $repository->id
+                    ];
 
                 $totalScore =
                     $this->scoreService
@@ -137,102 +126,76 @@ class RepositoryController
                             $githubRepository
                         );
 
-                SkillCheck
-                    ::updateOrCreate(
-                        [
-                            'repository_id' =>
-                                $repository
-                                    ->id
-                        ],
-                        [
-                            'total_score' =>
-                                $totalScore,
-
-                            'comment' =>
-                                '解析開始',
-
-                            'status' =>
-                                'processing',
-
-                            'started_at' =>
-                                now(),
-                        ]
-                    );
+                SkillCheck::updateOrCreate(
+                    [
+                        'repository_id' =>
+                            $repository->id
+                    ],
+                    [
+                        'total_score' =>
+                            $totalScore,
+                        'comment' =>
+                            '解析開始',
+                        'status' =>
+                            'processing',
+                        'started_at' =>
+                            now(),
+                    ]
+                );
             }
         );
     }
 
-    private function
-    formatRepositories(
-        Collection $repositories
+    private function formatRepositories(
+        Collection $repositories,
+        array $githubRepositories
     ): Collection
     {
         return $repositories->map(
-            function ($repository) {
+            function ($repository)
+            use ($githubRepositories) {
 
                 $githubRepository =
-                    $this->githubService
-                        ->getRepository(
-                            $repository
-                                ->github_url
-                        );
+                    $githubRepositories[
+                        $repository->id
+                    ];
 
                 $score =
                     SkillCheck::where(
                         'repository_id',
                         $repository->id
                     )
-                    ->value(
-                        'total_score'
-                    ) ?? 0;
+                    ->value('total_score')
+                    ?? 0;
 
                 return [
-                    'id' =>
-                        $repository->id,
-
+                    'id' => $repository->id,
                     'repository_name' =>
-                        $repository
-                            ->repository_name,
-
+                        $repository->repository_name,
                     'github_url' =>
-                        $repository
-                            ->github_url,
-
+                        $repository->github_url,
                     'branch_name' =>
-                        $repository
-                            ->branch_name,
-
+                        $repository->branch_name,
                     'status' =>
-                        $repository
-                            ->status,
-
-                    'score' =>
-                        $score,
-
+                        $repository->status,
+                    'score' => $score,
                     'language' =>
-                        $githubRepository[
-                            'language'
-                        ] ?? null,
-
+                        $githubRepository['language']
+                        ?? null,
                     'description' =>
-                        $githubRepository[
-                            'description'
-                        ] ?? null,
-
+                        $githubRepository['description']
+                        ?? null,
                     'stargazers_count' =>
                         $githubRepository[
                             'stargazers_count'
                         ] ?? 0,
-
                     'forks_count' =>
                         $githubRepository[
                             'forks_count'
                         ] ?? 0,
-
                     'updated_at' =>
-                        $githubRepository[
-                            'updated_at'
-                        ] ?? null,
+                        $githubRepository['updated_at']
+                        ?? null,
                 ];
             }
         );
