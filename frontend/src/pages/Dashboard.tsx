@@ -54,17 +54,9 @@ function Dashboard() {
 
             <ContributionChart contributions={ contributions } />
 
-            <RepositoryForm
-                onSuccess={
-                    fetchRepositories
-                }
-            />
+            <RepositoryForm onSuccess={ fetchRepositories } />
 
-            <RepositoryList
-                repositories={
-                    repositories
-                }
-            />
+            <RepositoryList repositories={ repositories } />
         </div>
     );
 }
