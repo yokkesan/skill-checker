@@ -1,6 +1,12 @@
 import { useState } from 'react';
 
-function RepositoryForm() {
+type Props = {
+    onSuccess: () => void;
+};
+
+function RepositoryForm({
+    onSuccess,
+}: Props) {
     const [githubUrl, setGithubUrl] =
         useState('');
 
@@ -40,6 +46,8 @@ function RepositoryForm() {
             console.log(data);
 
             setGithubUrl('');
+
+            onSuccess();
         } catch (error) {
             console.error(error);
         }
@@ -51,12 +59,7 @@ function RepositoryForm() {
                 Repository Register
             </h2>
 
-            <form
-                onSubmit={
-                    handleSubmit
-                }
-                className="repository-form"
-            >
+            <form onSubmit={ handleSubmit } className="repository-form" >
                 <input
                     type="text"
                     placeholder="https://github.com/user/repository"
@@ -70,12 +73,7 @@ function RepositoryForm() {
                     className="repository-form__input"
                 />
 
-                <button
-                    type="submit"
-                    className="repository-form__button"
-                >
-                    登録
-                </button>
+                <button type="submit" className="repository-form__button" > 登録 </button>
             </form>
         </section>
     );
