@@ -1,0 +1,20 @@
+.dashboard-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-card__title {
+    margin-bottom: 16px;
+}
+
+.dashboard-card--score {
+    flex: 2;
+}
+
+.dashboard-card--github {
+    flex: 1;
+}

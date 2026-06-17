@@ -1,0 +1,18 @@
+.repository-form {
+    display: flex;
+    gap: 12px;
+}
+
+.repository-form__input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.repository-form__button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}

@@ -1,0 +1,12 @@
+.repository-card {
+    padding: 16px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.repository-card:last-child {
+    border-bottom: none;
+}
+
+.repository-card__title {
+    margin-bottom: 8px;
+}
