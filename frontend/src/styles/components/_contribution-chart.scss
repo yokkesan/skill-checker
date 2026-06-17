@@ -1,0 +1,34 @@
+.contribution-chart {
+    display: grid;
+    grid-template-columns:
+        repeat(30, 12px);
+
+    gap: 6px;
+
+    justify-content: center;
+
+    margin-top: 24px;
+}
+
+.contribution-chart__cell {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: #ebedf0;
+}
+
+.contribution-chart__cell--level-1 {
+    background: #9be9a8;
+}
+
+.contribution-chart__cell--level-2 {
+    background: #40c463;
+}
+
+.contribution-chart__cell--level-3 {
+    background: #30a14e;
+}
+
+.contribution-chart__cell--level-4 {
+    background: #216e39;
+}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import '../styles/pages/_dashboard.scss';
+import '../styles/main.scss';
 
 import SkillScoreCard from '../components/dashboard/SkillScoreCard';
 import GithubStatsCard from '../components/dashboard/GithubStatsCard';
@@ -46,10 +46,10 @@ function Dashboard() {
             <div className="dashboard__top">
                 <SkillScoreCard repositories={ repositories } />
 
-                <GithubStatsCard />
+                <GithubStatsCard repositories={ repositories } />
             </div>
 
-            <ContributionChart />
+            <ContributionChart repositories={ repositories } />
 
             <RepositoryForm
                 onSuccess={
