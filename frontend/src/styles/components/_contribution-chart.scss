@@ -1,32 +1,50 @@
 .contribution-chart {
     display: grid;
+
     grid-auto-flow: column;
-    grid-template-rows: repeat(7, 12px);
+
+    grid-template-rows:
+        repeat(7, 12px);
+
     grid-auto-columns: 12px;
+
     gap: 6px;
+
     justify-content: center;
+
     margin-top: 24px;
 }
 
 .contribution-chart__cell {
     width: 12px;
+
     height: 12px;
-    border-radius: 2px;
-    background: #ebedf0;
+
+    border-radius: 3px;
+
+    background: #f2f3f4;
+
+    transition:
+        transform 0.2s,
+        background-color 0.2s;
+}
+
+.contribution-chart__cell:hover {
+    transform: scale(1.15);
 }
 
 .contribution-chart__cell--level-1 {
-    background: #9be9a8;
+    background: #166534;
 }
 
 .contribution-chart__cell--level-2 {
-    background: #40c463;
+    background: #16a34a;
 }
 
 .contribution-chart__cell--level-3 {
-    background: #30a14e;
+    background: #22c55e;
 }
 
 .contribution-chart__cell--level-4 {
-    background: #216e39;
+    background: #4ade80;
 }

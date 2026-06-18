@@ -30,14 +30,18 @@ function SkillScoreCard({
             : 0;
 
     return (
-        <section className=" dashboard-card dashboard-card--score " >
-            <h2 className=" dashboard-card__title " >
+        <section className="dashboard-card dashboard-card--score">
+            <h2 className="dashboard-card__title">
                 Skill Score
             </h2>
 
-            <p> 総合偏差値 </p>
+            <p className="score-card__label">
+                総合偏差値
+            </p>
 
-            <h3> {averageScore} </h3>
+            <h3 className="score-card__value">
+                {averageScore}
+            </h3>
         </section>
     );
 }

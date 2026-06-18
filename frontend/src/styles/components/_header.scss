@@ -1,0 +1,36 @@
+.header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding:
+        20px
+        40px;
+
+    background: #111827;
+
+    border-bottom:
+        1px solid #1f2937;
+}
+
+.header__logo {
+    color: #22c55e;
+
+    font-size: 24px;
+
+    font-weight: 700;
+}
+
+.header__nav {
+    color: #f9fafb;
+
+    font-size: 16px;
+}
+
+.header__user {
+    color: #9ca3af;
+
+    font-size: 14px;
+}

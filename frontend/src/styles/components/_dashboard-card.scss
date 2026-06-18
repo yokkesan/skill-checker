@@ -1,14 +1,35 @@
 .dashboard-card {
-    background: #fff;
-    border-radius: 16px;
     padding: 24px;
+
+    background: #17223b;
+
+    border: 1px solid #17223b;
+
+    border-radius: 16px;
+
     box-shadow:
-        0 2px 8px
-        rgba(0, 0, 0, 0.08);
+        0 8px 24px
+        rgba(0, 0, 0, 0.3);
+
+    transition:
+        transform 0.2s,
+        border-color 0.2s;
+}
+
+.dashboard-card:hover {
+    border-color: #22c55e;
+
+    transform:
+        translateY(-2px);
 }
 
 .dashboard-card__title {
     margin-bottom: 16px;
+
+    color: #ffffff;
+
+    font-size: 24px;
+    font-weight: 600;
 }
 
 .dashboard-card--score {

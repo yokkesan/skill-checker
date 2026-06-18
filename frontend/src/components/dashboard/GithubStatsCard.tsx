@@ -63,16 +63,48 @@ function GithubStatsCard({
             </h2>
 
             <div className="github-stats">
-                <p> Repositories： {repositoryCount} </p>
+                <div className="github-stats__item">
+                    <span className="github-stats__label">
+                        Repositories
+                    </span>
 
-                <p> Stars： {totalStars} </p>
+                    <span className="github-stats__value">
+                        {repositoryCount}
+                    </span>
+                </div>
 
-                <p> Forks： {totalForks} </p>
+                <div className="github-stats__item">
+                    <span className="github-stats__label">
+                        Stars
+                    </span>
 
-                <p> Languages： {languageCount} </p>
+                    <span className="github-stats__value">
+                        {totalStars}
+                    </span>
+                </div>
+
+                <div className="github-stats__item">
+                    <span className="github-stats__label">
+                        Forks
+                    </span>
+
+                    <span className="github-stats__value">
+                        {totalForks}
+                    </span>
+                </div>
+
+                <div className="github-stats__item">
+                    <span className="github-stats__label">
+                        Languages
+                    </span>
+
+                    <span className="github-stats__value">
+                        {languageCount}
+                    </span>
+                </div>
             </div>
         </section>
-    );
+        );
 }
 
 export default GithubStatsCard;
