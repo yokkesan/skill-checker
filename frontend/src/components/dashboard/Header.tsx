@@ -1,18 +1,28 @@
 function Header() {
     return (
         <header className="header">
-            <div className="header__logo">
-                Skill Checker
+            <div className="header__left">
+                <div className="header__logo">
+                    {'</>'}
+                </div>
+
+                <span className="header__brand">
+                    Skill Checker
+                </span>
             </div>
 
-            <nav className="header__nav">
-                <span>
-                    Dashboard
-                </span>
-            </nav>
+            <div className="header__center">
+                Dashboard
+            </div>
 
-            <div className="header__user">
-                Guest User
+            <div className="header__right">
+                <div className="header__avatar">
+                    YK
+                </div>
+
+                <span className="header__username">
+                    yokkesan
+                </span>
             </div>
         </header>
     );

@@ -5,32 +5,75 @@
 
     align-items: center;
 
-    padding:
-        20px
-        40px;
+    padding: 16px 40px;
 
     background: #111827;
 
-    border-bottom:
-        1px solid #1f2937;
+    border-bottom: 1px solid #1f2937;
+}
+
+.header__left {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
 }
 
 .header__logo {
     color: #22c55e;
+
+    font-size: 28px;
+
+    font-weight: 700;
+}
+
+.header__brand {
+    color: #ffffff;
 
     font-size: 24px;
 
     font-weight: 700;
 }
 
-.header__nav {
-    color: #f9fafb;
+.header__center {
+    color: #22c55e;
 
-    font-size: 16px;
+    font-size: 18px;
+
+    font-weight: 600;
 }
 
-.header__user {
-    color: #9ca3af;
+.header__right {
+    display: flex;
 
-    font-size: 14px;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.header__avatar {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    color: #ffffff;
+
+    font-weight: 700;
+}
+
+.header__username {
+    color: #ffffff;
+
+    font-weight: 600;
 }
