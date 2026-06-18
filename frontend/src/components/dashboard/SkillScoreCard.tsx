@@ -35,13 +35,34 @@ function SkillScoreCard({
                 Skill Score
             </h2>
 
-            <p className="score-card__label">
-                総合偏差値
-            </p>
+            <div className="score-card">
+                <div className="score-ring">
+                    <div className="score-ring__inner">
+                        {averageScore}
+                    </div>
+                </div>
 
-            <h3 className="score-card__value">
-                {averageScore}
-            </h3>
+                <div className="score-card__content">
+                    <p className="score-card__label">
+                        総合偏差値
+                    </p>
+
+                    <div className="score-bar">
+                        <div
+                            className="score-bar__fill"
+                            style={{
+                                width: `${averageScore}%`,
+                            }}
+                        />
+                    </div>
+
+                    <div className="score-bar__scale">
+                        <span>0</span>
+                        <span>50</span>
+                        <span>100</span>
+                    </div>
+                </div>
+            </div>
         </section>
     );
 }

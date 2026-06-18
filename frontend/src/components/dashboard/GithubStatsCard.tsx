@@ -64,8 +64,8 @@ function GithubStatsCard({
 
             <div className="github-stats">
                 <div className="github-stats__item">
-                    <span className="github-stats__label">
-                        Repositories
+                    <span className="github-stats__badge">
+                        Repository
                     </span>
 
                     <span className="github-stats__value">
@@ -74,7 +74,7 @@ function GithubStatsCard({
                 </div>
 
                 <div className="github-stats__item">
-                    <span className="github-stats__label">
+                    <span className="github-stats__badge">
                         Stars
                     </span>
 
@@ -84,7 +84,7 @@ function GithubStatsCard({
                 </div>
 
                 <div className="github-stats__item">
-                    <span className="github-stats__label">
+                    <span className="github-stats__badge">
                         Forks
                     </span>
 
@@ -94,7 +94,7 @@ function GithubStatsCard({
                 </div>
 
                 <div className="github-stats__item">
-                    <span className="github-stats__label">
+                    <span className="github-stats__badge">
                         Languages
                     </span>
 
@@ -104,7 +104,7 @@ function GithubStatsCard({
                 </div>
             </div>
         </section>
-        );
+    );
 }
 
 export default GithubStatsCard;
