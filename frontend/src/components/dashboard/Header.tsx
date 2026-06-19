@@ -16,6 +16,7 @@ function Header() {
             </div>
 
             <div className="header__right">
+                <div className="header_gitlogo"> <img src="/giticon.svg" alt="GitHub" /> </div>
                 <div className="header__avatar">
                     YK
                 </div>
