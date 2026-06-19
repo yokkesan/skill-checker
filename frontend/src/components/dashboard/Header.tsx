@@ -1,4 +1,10 @@
+import { Link } from 'react-router-dom';
+
 function Header() {
+    const user = JSON.parse(
+        localStorage.getItem('user') ?? 'null'
+    );
+
     return (
         <header className="header">
             <div className="header__left">
@@ -16,14 +22,33 @@ function Header() {
             </div>
 
             <div className="header__right">
-                <div className="header_gitlogo"> <img src="/giticon.svg" alt="GitHub" /> </div>
-                <div className="header__avatar">
-                    YK
+                <div className="header_gitlogo">
+                    <img
+                        src="/giticon.svg"
+                        alt="GitHub"
+                    />
                 </div>
 
-                <span className="header__username">
-                    yokkesan
-                </span>
+                {user ? (
+                    <>
+                        <div className="header__avatar">
+                            {user.name
+                                ?.substring(0, 2)
+                                .toUpperCase()}
+                        </div>
+
+                        <span className="header__username">
+                            {user.name}
+                        </span>
+                    </>
+                ) : (
+                    <Link
+                        to="/login"
+                        className="header__login"
+                    >
+                        Login
+                    </Link>
+                )}
             </div>
         </header>
     );
