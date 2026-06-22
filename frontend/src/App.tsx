@@ -6,6 +6,7 @@ import {
 
 import Dashboard from './pages/Dashboard';
 import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
 
 function App() {
     return (
@@ -19,6 +20,11 @@ function App() {
                 <Route
                     path="/login"
                     element={<Login />}
+                />
+
+                <Route
+                    path="/register"
+                    element={<Register />}
                 />
             </Routes>
         </BrowserRouter>
