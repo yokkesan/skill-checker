@@ -1,8 +1,7 @@
 import type { Repository } from '../../types/repository';
 
 type Props = {
-    repositories:
-        Repository[];
+    repositories: Repository[];
 };
 
 function RepositoryList({
@@ -14,18 +13,73 @@ function RepositoryList({
                 Repository List
             </h2>
 
-            {repositories.map((repository) => (
-                <div key={repository.id} className="repository-card" >
-                    <h3 className="repository-card__title">{repository.repository_name}</h3>
-
-                    <p> { repository.github_url } </p>
-
-                    <p> branch: {' '} { repository.branch_name } </p>
-                    <p> status: {' '} { repository.status } </p>
-
-                    <button> 詳細を見る </button>
+            <div className="repository-table">
+                <div className="repository-table__header">
+                    <div>リポジトリ名</div>
+                    <div>ブランチ</div>
+                    <div>最終解析</div>
+                    <div>スコア</div>
+                    <div>ステータス</div>
+                    <div>操作</div>
                 </div>
-            ))}
+
+                {repositories.map((repository) => (
+                    <div
+                        key={repository.id}
+                        className="repository-table__row"
+                    >
+                        <div className="repository-table__repository">
+                            <div className="repository-table__icon">
+                                📁
+                            </div>
+
+                            <div>
+                                <div className="repository-table__name">
+                                    {repository.repository_name}
+                                </div>
+
+                                <div className="repository-table__tech">
+                                    {repository.technologies.join(' / ')}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span className="repository-table__branch">
+                                {repository.branch_name}
+                            </span>
+                        </div>
+
+                        <div>
+                            {repository.analyzed_at}
+                        </div>
+
+                        <div className="repository-table__score">
+                            {repository.score}
+                        </div>
+
+                        <div>
+                            <span className="repository-table__status">
+                                {repository.status}
+                            </span>
+                        </div>
+
+                        <div className="repository-table__actions">
+                            <a
+                                href={repository.github_url}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                ↗
+                            </a>
+
+                            <button type="button">
+                                ⋮
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </section>
     );
 }
