@@ -149,16 +149,13 @@ class RepositoryController extends Controller
     private function formatRepositories(
         Collection $repositories,
         array $githubRepositories
-    ): Collection
-    {
+    ): Collection {
         return $repositories->map(
             function ($repository)
             use ($githubRepositories) {
 
                 $githubRepository =
-                    $githubRepositories[
-                        $repository->id
-                    ];
+                    $githubRepositories[$repository->id];
 
                 $score =
                     SkillCheck::where(
@@ -169,32 +166,31 @@ class RepositoryController extends Controller
                     ?? 0;
 
                 return [
-                    'id' => $repository->id,
+                    'id' =>
+                    $repository->id,
+
                     'repository_name' =>
-                        $repository->repository_name,
+                    $repository->repository_name,
+
                     'github_url' =>
-                        $repository->github_url,
+                    $repository->github_url,
+
                     'branch_name' =>
-                        $repository->branch_name,
+                    $repository->branch_name,
+
                     'status' =>
-                        $repository->status,
-                    'score' => $score,
-                    'language' =>
+                    $repository->status,
+
+                    'score' =>
+                    $score,
+
+                    'technologies' => [
                         $githubRepository['language']
-                        ?? null,
-                    'description' =>
-                        $githubRepository['description']
-                        ?? null,
-                    'stargazers_count' =>
-                        $githubRepository[
-                            'stargazers_count'
-                        ] ?? 0,
-                    'forks_count' =>
-                        $githubRepository[
-                            'forks_count'
-                        ] ?? 0,
-                    'updated_at' =>
-                        $githubRepository['updated_at']
+                            ?? 'Unknown',
+                    ],
+
+                    'analyzed_at' =>
+                    $githubRepository['updated_at']
                         ?? null,
                 ];
             }
