@@ -7,4 +7,10 @@ export type Repository = {
     technologies: string[];
     analyzed_at: string | null;
     score: number;
+
+    language?: string;
+    description?: string;
+    stars?: number;
+    forks?: number;
+    updated_at?: string | null;
 };

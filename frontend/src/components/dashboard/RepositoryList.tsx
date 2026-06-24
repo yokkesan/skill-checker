@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import type { Repository } from '../../types/repository';
 
 import RepositoryIcon from '../icons/RepositoryIcon';
@@ -11,6 +14,11 @@ type Props = {
 function RepositoryList({
     repositories,
 }: Props) {
+    const [openMenuId, setOpenMenuId] =
+        useState<number | null>(null);
+
+    const navigate = useNavigate();
+
     return (
         <section className="dashboard-card dashboard__repository">
             <h2 className="dashboard-card__title">
@@ -77,9 +85,47 @@ function RepositoryList({
                                 <ExternalLinkIcon />
                             </a>
 
-                            <button type="button">
-                                <MoreVerticalIcon />
-                            </button>
+                            <div className="repository-table__menu">
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setOpenMenuId(
+                                            openMenuId === repository.id
+                                                ? null
+                                                : repository.id
+                                        )
+                                    }
+                                >
+                                    <MoreVerticalIcon />
+                                </button>
+
+                                {openMenuId === repository.id && (
+                                    <div className="repository-table__dropdown">
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                navigate(
+                                                    `/repositories/${repository.id}`
+                                                )
+                                            }
+                                        >
+                                            詳細を見る
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                console.log(
+                                                    'delete',
+                                                    repository.id
+                                                );
+                                            }}
+                                        >
+                                            削除
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 ))}

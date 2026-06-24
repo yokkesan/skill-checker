@@ -12,6 +12,7 @@ Route::post( '/repositories', [RepositoryController::class, 'store'] );
 Route::get( '/repositories', [RepositoryController::class, 'index'] );
 
 Route::post( '/repositories/{repository}/analyze', [SkillCheckController::class, 'analyze'] );
+Route::get( '/repositories/{repository}', [RepositoryController::class, 'show'] );
 
 Route::post( '/register', [RegisterController::class, 'store'] );
 Route::post( '/login', [LoginController::class, 'login'] );

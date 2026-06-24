@@ -1,5 +1,6 @@
 @use './pages/dashboard';
 @use './pages/login';
+@use './pages/repository-detail';
 
 @use './components/header';
 
@@ -8,3 +9,4 @@
 @use './components/repository-form';
 @use './components/contribution-chart';
 @use './components/github-stats-card';
+@use './components/app-layout';
