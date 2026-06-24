@@ -1,5 +1,9 @@
 import type { Repository } from '../../types/repository';
 
+import RepositoryIcon from '../icons/RepositoryIcon';
+import ExternalLinkIcon from '../icons/ExternalLinkIcon';
+import MoreVerticalIcon from '../icons/MoreVerticalIcon';
+
 type Props = {
     repositories: Repository[];
 };
@@ -30,7 +34,7 @@ function RepositoryList({
                     >
                         <div className="repository-table__repository">
                             <div className="repository-table__icon">
-                                <img src="/icons/repository.svg" alt="Repository" />
+                                <RepositoryIcon />
                             </div>
 
                             <div>
@@ -65,12 +69,16 @@ function RepositoryList({
                         </div>
 
                         <div className="repository-table__actions">
-                            <a href={repository.github_url} target="_blank" rel="noreferrer" >
-                                <img src="/icons/external-link.svg" alt="Open Repository" />
+                            <a
+                                href={repository.github_url}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <ExternalLinkIcon />
                             </a>
 
                             <button type="button">
-                                <img src="/icons/more-vertical.svg" alt="More" />
+                                <MoreVerticalIcon />
                             </button>
                         </div>
                     </div>

@@ -73,7 +73,13 @@
 
     background: #1f2937;
 
-    font-size: 18px;
+    color: #22c55e;
+}
+
+.repository-table__icon svg {
+    width: 20px;
+
+    height: 20px;
 }
 
 .repository-table__name {
@@ -138,12 +144,25 @@
     gap: 12px;
 }
 
+.repository-table__actions a,
+.repository-table__actions button {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #22c55e;
+}
+
+.repository-table__actions svg {
+    width: 20px;
+
+    height: 20px;
+}
+
 .repository-table__actions a {
-    color: #9ca3af;
-
     text-decoration: none;
-
-    font-size: 18px;
 }
 
 .repository-table__actions button {
@@ -151,26 +170,10 @@
 
     background: transparent;
 
-    color: #9ca3af;
-
-    font-size: 18px;
-
     cursor: pointer;
 }
 
 .repository-table__actions a:hover,
 .repository-table__actions button:hover {
-    color: #ffffff;
-}
-
-.repository-table__icon img {
-    width: 20px;
-    height: 20px;
-    color: #22c55e;
-}
-
-.repository-table__actions img {
-    width: 20px;
-    height: 20px;
-    color: #22c55e;
+    color: #16a34a;
 }
