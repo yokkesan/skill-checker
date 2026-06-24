@@ -1,0 +1,161 @@
+.repository-detail {
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 40px;
+}
+
+.repository-detail__hero {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 32px;
+
+    margin-bottom: 24px;
+}
+
+.repository-detail__hero h1 {
+    margin-bottom: 16px;
+
+    color: #ffffff;
+
+    font-size: 48px;
+
+    font-weight: 700;
+}
+
+.repository-detail__meta {
+    display: flex;
+
+    gap: 12px;
+
+    margin-bottom: 16px;
+}
+
+.repository-detail__badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 8px 16px;
+
+    border-radius: 10px;
+
+    background: #1f2937;
+
+    color: #e5e7eb;
+
+    font-size: 14px;
+}
+
+.repository-detail__hero a {
+    color: #d1d5db;
+
+    text-decoration: none;
+}
+
+.repository-detail__hero a:hover {
+    color: #22c55e;
+}
+
+.repository-detail__stats {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 24px;
+
+    margin-bottom: 24px;
+}
+
+.repository-detail__info {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 32px;
+}
+
+.repository-detail__info strong {
+    display: block;
+
+    margin-bottom: 12px;
+
+    color: #9ca3af;
+
+    font-size: 14px;
+}
+
+.repository-detail__info p {
+    color: #ffffff;
+}
+
+.repository-detail__technologies {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.repository-detail__technology {
+    padding: 8px 12px;
+
+    border-radius: 8px;
+
+    background: #1f2937;
+
+    color: #ffffff;
+
+    font-size: 14px;
+}
+
+.repository-detail__analysis {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 24px;
+}
+
+.repository-detail__analyze {
+    padding: 14px 32px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #22c55e;
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.repository-detail__analyze:hover {
+    background: #16a34a;
+}
+
+.repository-detail__empty {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    min-height: 200px;
+
+    color: #9ca3af;
+
+    font-size: 18px;
+}

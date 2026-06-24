@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import '../styles/main.scss';
+import AppLayout from '../components/layout/AppLayout';
 import Header from '../components/dashboard/Header';
 import SkillScoreCard from '../components/dashboard/SkillScoreCard';
 import GithubStatsCard from '../components/dashboard/GithubStatsCard';
@@ -41,37 +42,39 @@ function Dashboard() {
     }, []);
 
     return (
-        <>
-            <Header />
+        <AppLayout>
+            <>
+                <Header />
 
-            <div className="dashboard">
-                <h1 className="dashboard__title">
-                    Dashboard
-                </h1>
+                <div className="dashboard">
+                    <h1 className="dashboard__title">
+                        Dashboard
+                    </h1>
 
-                <div className="dashboard__top">
-                    <SkillScoreCard
-                        repositories={repositories}
+                    <div className="dashboard__top">
+                        <SkillScoreCard
+                            repositories={repositories}
+                        />
+
+                        <GithubStatsCard
+                            repositories={repositories}
+                        />
+                    </div>
+
+                    <ContributionChart
+                        contributions={contributions}
                     />
 
-                    <GithubStatsCard
+                    <RepositoryForm
+                        onSuccess={fetchRepositories}
+                    />
+
+                    <RepositoryList
                         repositories={repositories}
                     />
                 </div>
-
-                <ContributionChart
-                    contributions={contributions}
-                />
-
-                <RepositoryForm
-                    onSuccess={fetchRepositories}
-                />
-
-                <RepositoryList
-                    repositories={repositories}
-                />
-            </div>
-        </>
+            </>
+        </AppLayout>
     );
 }
 

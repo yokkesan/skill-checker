@@ -48,4 +48,24 @@ class GithubRepositoryService
         return
             $response->json();
     }
+
+    public function getLanguages(
+        string $githubUrl
+    ): array {
+        $repoPath =
+            str_replace(
+                'https://github.com/',
+                '',
+                $githubUrl
+            );
+
+        $response =
+            Http::withToken(
+                env('GITHUB_TOKEN')
+            )->get(
+                "https://api.github.com/repos/{$repoPath}/languages"
+            );
+
+        return $response->json();
+    }
 }

@@ -106,6 +106,73 @@ class RepositoryController extends Controller
         ]);
     }
 
+    public function show(
+        Repository $repository
+    ) {
+        $githubRepository =
+            $this->githubService
+            ->getRepository(
+                $repository->github_url
+            );
+
+        $languages =
+            $this->githubService
+            ->getLanguages(
+                $repository->github_url
+            );
+
+        $score =
+            SkillCheck::where(
+                'repository_id',
+                $repository->id
+            )
+            ->value('total_score')
+            ?? 0;
+
+        return response()->json([
+            'repository' => [
+                'id' =>
+                $repository->id,
+
+                'repository_name' =>
+                $repository->repository_name,
+
+                'github_url' =>
+                $repository->github_url,
+
+                'branch_name' =>
+                $repository->branch_name,
+
+                'status' =>
+                $repository->status,
+
+                'score' =>
+                $score,
+
+                'technologies' =>
+                array_keys(
+                    $languages
+                ),
+
+                'description' =>
+                $githubRepository['description']
+                    ?? '',
+
+                'stars' =>
+                $githubRepository['stargazers_count']
+                    ?? 0,
+
+                'forks' =>
+                $githubRepository['forks_count']
+                    ?? 0,
+
+                'updated_at' =>
+                $githubRepository['updated_at']
+                    ?? null,
+            ],
+        ]);
+    }
+
     private function syncSkillChecks(
         Collection $repositories,
         array $githubRepositories
@@ -166,32 +233,21 @@ class RepositoryController extends Controller
                     ?? 0;
 
                 return [
-                    'id' =>
-                    $repository->id,
+                    'id' => $repository->id,
 
-                    'repository_name' =>
-                    $repository->repository_name,
+                    'repository_name' => $repository->repository_name,
 
-                    'github_url' =>
-                    $repository->github_url,
+                    'github_url' => $repository->github_url,
 
-                    'branch_name' =>
-                    $repository->branch_name,
+                    'branch_name' => $repository->branch_name,
 
-                    'status' =>
-                    $repository->status,
+                    'status' => $repository->status,
 
-                    'score' =>
-                    $score,
+                    'score' => $score,
 
-                    'technologies' => [
-                        $githubRepository['language']
-                            ?? 'Unknown',
-                    ],
+                    'technologies' => [ $githubRepository['language'] ?? 'Unknown', ],
 
-                    'analyzed_at' =>
-                    $githubRepository['updated_at']
-                        ?? null,
+                    'analyzed_at' => $githubRepository['updated_at'] ?? null,
                 ];
             }
         );

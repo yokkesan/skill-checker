@@ -7,25 +7,19 @@ import {
 import Dashboard from './pages/Dashboard';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import RepositoryDetail from './pages/RepositoryDetail';
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route
-                    path="/"
-                    element={<Dashboard />}
-                />
+                <Route path="/" element={<Dashboard />} />
 
-                <Route
-                    path="/login"
-                    element={<Login />}
-                />
+                <Route path="/login" element={<Login />} />
 
-                <Route
-                    path="/register"
-                    element={<Register />}
-                />
+                <Route path="/register" element={<Register />} />
+
+                <Route path="/repositories/:id" element={<RepositoryDetail />} />
             </Routes>
         </BrowserRouter>
     );
