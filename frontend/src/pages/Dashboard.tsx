@@ -37,6 +37,26 @@ function Dashboard() {
             }
         };
 
+    const syncRepositories =
+        async () => {
+            const response =
+                await fetch(
+                    `${import.meta.env.VITE_API_URL}/repositories/sync`,
+                    {
+                        method: 'POST',
+                    }
+                );
+
+            if (!response.ok) {
+                alert('同期に失敗しました。');
+                return;
+            }
+
+            fetchRepositories();
+
+            alert('同期しました。');
+        };
+
     useEffect(() => {
         fetchRepositories();
     }, []);
@@ -47,9 +67,19 @@ function Dashboard() {
                 <Header />
 
                 <div className="dashboard">
-                    <h1 className="dashboard__title">
-                        Dashboard
-                    </h1>
+                    <div className="dashboard__heading">
+                        <h1 className="dashboard__title">
+                            Dashboard
+                        </h1>
+
+                        <button
+                            type="button"
+                            className="dashboard__sync-button"
+                            onClick={syncRepositories}
+                        >
+                            GitHubと同期
+                        </button>
+                    </div>
 
                     <div className="dashboard__top">
                         <SkillScoreCard

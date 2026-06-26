@@ -42,3 +42,34 @@
 
     line-height: 1;
 }
+
+.dashboard__heading {
+    padding-left: 3rem;
+    display: flex;
+
+    align-items: center;
+
+    gap: 2rem;
+
+    margin-bottom: 32px;
+}
+
+.dashboard__sync-button{
+    padding: 14px 24px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #22c55e;
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
