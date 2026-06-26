@@ -114,11 +114,28 @@ function RepositoryList({
 
                                         <button
                                             type="button"
-                                            onClick={() => {
-                                                console.log(
-                                                    'delete',
-                                                    repository.id
+                                            onClick={async () => {
+                                                const confirmed = window.confirm(
+                                                    'このリポジトリを削除しますか？'
                                                 );
+
+                                                if (!confirmed) {
+                                                    return;
+                                                }
+
+                                                const response = await fetch(
+                                                    `${import.meta.env.VITE_API_URL}/repositories/${repository.id}`,
+                                                    {
+                                                        method: 'DELETE',
+                                                    }
+                                                );
+
+                                                if (!response.ok) {
+                                                    alert('削除に失敗しました。');
+                                                    return;
+                                                }
+                                                setOpenMenuId(null);
+                                                alert('削除しました。');
                                             }}
                                         >
                                             削除
