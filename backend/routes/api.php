@@ -13,6 +13,7 @@ Route::get( '/repositories', [RepositoryController::class, 'index'] );
 
 Route::post( '/repositories/{repository}/analyze', [SkillCheckController::class, 'analyze'] );
 Route::get( '/repositories/{repository}', [RepositoryController::class, 'show'] );
+Route::delete( '/repositories/{repository}', [RepositoryController::class, 'destroy'] );
 
 Route::post( '/register', [RegisterController::class, 'store'] );
 Route::post( '/login', [LoginController::class, 'login'] );

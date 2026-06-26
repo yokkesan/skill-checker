@@ -173,6 +173,16 @@ class RepositoryController extends Controller
         ]);
     }
 
+    public function destroy(
+        Repository $repository
+    ) {
+        $repository->delete();
+
+        return response()->json([
+            'message' => 'Repository deleted.',
+        ]);
+    }
+
     private function syncSkillChecks(
         Collection $repositories,
         array $githubRepositories
