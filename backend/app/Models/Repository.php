@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Repository extends Model
 {
@@ -24,5 +25,12 @@ class Repository extends Model
     public function skillChecks(): HasMany
     {
         return $this->hasMany(SkillCheck::class);
+    }
+
+    public function snapshot(): HasOne
+    {
+        return $this->hasOne(
+            RepositorySnapshot::class
+        );
     }
 }
