@@ -13,6 +13,18 @@ function RepositoryDetail() {
 
     const [repository, setRepository] = useState<Repository | null>(null);
 
+    const handleAnalyze = async () => {
+
+        const response = await fetch(
+            `${import.meta.env.VITE_API_URL}/repositories/${id}/analyze`,
+            { method: 'POST', }
+        );
+
+        const data = await response.json();
+
+        console.log(data);
+    };
+
     useEffect(() => {
         fetch(
             `${import.meta.env.VITE_API_URL}/repositories/${id}`
@@ -146,12 +158,12 @@ function RepositoryDetail() {
                         </p>
                     </div>
 
-                    <button
-                        type="button"
-                        className="repository-detail__analyze"
-                    >
-                        解析開始
-                    </button>
+                        <button
+                            type="button"
+                            className="repository-detail__analyze"
+                            onClick={handleAnalyze}
+                        >解析開始
+                        </button>
                 </div>
             </section>
 

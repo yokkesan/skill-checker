@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'analyzer' => [
+    'url' => env('ANALYZER_API_URL'),
+    ],
+
 ];
