@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Http;
 use App\Models\Repository;
-
 use App\Models\SkillCheck;
 
 class SkillCheckController extends Controller
@@ -13,6 +12,14 @@ class SkillCheckController extends Controller
     public function analyze(
         Repository $repository
     ) {
+        $response = Http::post(
+            config('services.analyzer.url') . '/analyze',
+            [
+                'repositoryId' => $repository->id,
+                'githubUrl' => $repository->github_url,
+            ]
+        );
+
         $skillCheck =
             SkillCheck::create([
                 'repository_id' =>
@@ -32,10 +39,10 @@ class SkillCheckController extends Controller
 
         return response()->json([
             'message' =>
-                'Analysis started',
+            'Analysis started',
 
             'skill_check' =>
-                $skillCheck,
+            $skillCheck,
         ]);
     }
 }
