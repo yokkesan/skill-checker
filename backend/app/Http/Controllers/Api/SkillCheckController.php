@@ -37,12 +37,8 @@ class SkillCheckController extends Controller
                 now(),
             ]);
 
-        return response()->json([
-            'message' =>
-            'Analysis started',
-
-            'skill_check' =>
-            $skillCheck,
-        ]);
+        return response()->json(
+            $response->json()
+        );
     }
 }

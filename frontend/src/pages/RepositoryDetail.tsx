@@ -13,16 +13,23 @@ function RepositoryDetail() {
 
     const [repository, setRepository] = useState<Repository | null>(null);
 
+    const [analysisResult, setAnalysisResult] =
+        useState<string | null>(null);
+
     const handleAnalyze = async () => {
 
         const response = await fetch(
             `${import.meta.env.VITE_API_URL}/repositories/${id}/analyze`,
-            { method: 'POST', }
+            { method: 'POST' }
         );
 
         const data = await response.json();
 
-        console.log(data);
+        console.log('Analyze Result', data);
+
+        setAnalysisResult(
+            data.language
+        );
     };
 
     useEffect(() => {
@@ -167,15 +174,19 @@ function RepositoryDetail() {
                 </div>
             </section>
 
-            <section className="dashboard-card">
-                <h2 className="dashboard-card__title">
-                    Analysis Result
-                </h2>
+                <section className="dashboard-card">
+                    <h2 className="dashboard-card__title">
+                        Analysis Result
+                    </h2>
 
-                <div className="repository-detail__empty">
-                    まだ解析が実行されていません
-                </div>
-            </section>
+                    {analysisResult ? (
+                        <div> <p> Language : {analysisResult} </p> </div>
+                    ) : (
+                        <div className="repository-detail__empty">
+                            まだ解析が実行されていません
+                        </div>
+                    )}
+                </section>
         </div>
         </AppLayout>
     );
