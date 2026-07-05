@@ -100,11 +100,8 @@ class RepositoryController extends Controller
         $snapshot =
             $repository->snapshot;
 
-        $score =
-            SkillCheck::where(
-                'repository_id',
-                $repository->id
-            )
+        $score = SkillCheck::where( 'repository_id', $repository->id )
+            ->orderByDesc('id')
             ->value('total_score')
             ?? 0;
 

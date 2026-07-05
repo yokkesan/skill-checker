@@ -37,8 +37,22 @@ class SkillCheckController extends Controller
                 now(),
             ]);
 
+        $data =
+            $response->json();
+
+        $skillCheck->update([
+            'total_score' =>
+            $data['score'] ?? 0,
+
+            'status' =>
+            'completed',
+
+            'finished_at' =>
+            now(),
+        ]);
+
         return response()->json(
-            $response->json()
+            $data
         );
     }
 }
