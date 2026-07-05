@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import type { Repository, } from '../types/repository';
 import type { AnalyzeResult } from '../types/analyze-result';
 import AppLayout from '../components/layout/AppLayout';
+import Header from '../components/dashboard/Header';
 
 
 function RepositoryDetail() {
@@ -55,6 +56,8 @@ function RepositoryDetail() {
 
     return (
         <AppLayout>
+            <>
+                <Header />
             <div className="repository-detail">
                 <section className="dashboard-card">
                     <div className="repository-detail__hero">
@@ -207,6 +210,7 @@ function RepositoryDetail() {
                     )}
                 </section>
             </div>
+            </>
         </AppLayout>
     );
 }
