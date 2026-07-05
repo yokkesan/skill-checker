@@ -1,6 +1,7 @@
 import { useEffect, useState, } from 'react';
 import { useParams } from 'react-router-dom';
 import type { Repository, } from '../types/repository';
+import type { AnalyzeResult } from '../types/analyze-result';
 import AppLayout from '../components/layout/AppLayout';
 
 
@@ -9,9 +10,7 @@ function RepositoryDetail() {
 
     const [repository, setRepository] = useState<Repository | null>(null);
 
-    const [analysisResult, setAnalysisResult] =
-        useState<string | null>(null);
-
+    const [analysisResult, setAnalysisResult] = useState<AnalyzeResult | null>(null);
     const handleAnalyze = async () => {
 
         const response = await fetch(
@@ -21,9 +20,7 @@ function RepositoryDetail() {
 
         const data = await response.json();
 
-        setAnalysisResult(
-            data.language
-        );
+        setAnalysisResult( data );
 
         // 追加
         const repositoryResponse = await fetch(
@@ -186,7 +183,23 @@ function RepositoryDetail() {
                     </h2>
 
                     {analysisResult ? (
-                        <div> <p> Language : {analysisResult} </p> </div>
+                        <div>
+
+                            <p> Framework : {analysisResult.framework} </p>
+
+                            <p> Total Score : {analysisResult.totalScore} </p>
+
+                            {analysisResult.details.map((detail) => (
+                                <div key={detail.category}>
+
+                                    <p> {detail.category} : {detail.score}点 </p>
+
+                                    <p> {detail.message} </p>
+
+                                </div>
+                            ))}
+
+                        </div>
                     ) : (
                         <div className="repository-detail__empty">
                             まだ解析が実行されていません
