@@ -42,7 +42,7 @@ class SkillCheckController extends Controller
 
         $skillCheck->update([
             'total_score' =>
-            $data['score'] ?? 0,
+            $data['totalScore'] ?? 0,
 
             'status' =>
             'completed',
