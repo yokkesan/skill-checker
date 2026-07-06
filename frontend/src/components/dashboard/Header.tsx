@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation, } from 'react-router-dom';
 
 function Header() {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [isMenuOpen, setIsMenuOpen] =
         useState(false);
@@ -20,6 +21,17 @@ function Header() {
         navigate('/login');
     };
 
+    const pageTitle =
+    location.pathname === '/'
+        ? 'Dashboard'
+        : location.pathname === '/login'
+        ? 'Login'
+        : location.pathname === '/register'
+        ? 'Register'
+        : location.pathname.startsWith('/repositories/')
+        ? 'Repository Detail'
+        : '';
+
     return (
         <header className="header">
             <div className="header__left">
@@ -27,14 +39,16 @@ function Header() {
                     {'</>'}
                 </div>
 
-                <span className="header__brand">
+                <div
+                    className="header__brand"
+                    onClick={() => navigate('/')}
+                    style={{ cursor: 'pointer' }}
+                >
                     Skill Checker
-                </span>
+                </div>
             </div>
 
-            <div className="header__center">
-                Dashboard
-            </div>
+            <div className="header__center"> {pageTitle} </div>
 
             <div className="header__right">
                 <div className="header_gitlogo">
@@ -55,8 +69,8 @@ function Header() {
                     >
                         {user
                             ? user.name
-                                  .substring(0, 2)
-                                  .toUpperCase()
+                                .substring(0, 2)
+                                .toUpperCase()
                             : '?'}
                     </div>
 

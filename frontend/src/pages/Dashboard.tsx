@@ -16,7 +16,7 @@ function Dashboard() {
         useState<Repository[]>([]);
 
     const [contributions, setContributions] =
-    useState<Record<string, number>>({});
+        useState<Record<string, number>>({});
 
     const fetchRepositories =
         async () => {
@@ -29,9 +29,34 @@ function Dashboard() {
                 const data =
                     await response.json();
 
-                setRepositories( data.repositories );
+                setRepositories(
+                    data.repositories
+                );
 
-                setContributions( data.contributions );
+                const mergedContributions:
+                    Record<string, number> = {};
+
+                data.repositories.forEach(
+                    (repository: Repository) => {
+
+                        Object.entries(
+                            repository.contributions ?? {}
+                        ).forEach(
+                            ([date, count]) => {
+
+                                mergedContributions[date] =
+                                    (mergedContributions[date] ?? 0)
+                                    + Number(count);
+
+                            }
+                        );
+                    }
+                );
+
+                setContributions(
+                    mergedContributions
+                );
+
             } catch (error) {
                 console.error(error);
             }
@@ -52,7 +77,7 @@ function Dashboard() {
                 return;
             }
 
-            fetchRepositories();
+            await fetchRepositories();
 
             alert('同期しました。');
         };
