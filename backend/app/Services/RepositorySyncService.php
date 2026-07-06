@@ -18,6 +18,7 @@ class RepositorySyncService
     public function sync(
         Repository $repository
     ): void {
+
         $githubRepository =
             $this->githubService
             ->getRepository(
@@ -27,6 +28,12 @@ class RepositorySyncService
         $languages =
             $this->githubService
             ->getLanguages(
+                $repository->github_url
+            );
+
+        $contributions =
+            $this->githubService
+            ->getContributions(
                 $repository->github_url
             );
 
@@ -56,6 +63,8 @@ class RepositorySyncService
                     'default_branch' =>
                     $githubRepository['default_branch']
                         ?? null,
+
+                    'contributions' => $contributions,
 
                     'last_pushed_at' =>
                     isset($githubRepository['pushed_at'])

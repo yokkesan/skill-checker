@@ -15,8 +15,15 @@ class RepositorySnapshot extends Model
         'stars',
         'forks',
         'default_branch',
+        'contributions',
         'last_pushed_at',
         'last_synced_at',
+    ];
+
+    protected $casts = [
+        'last_pushed_at' => 'datetime',
+        'last_synced_at' => 'datetime',
+        'contributions' => 'array',
     ];
 
     public function repository(): BelongsTo

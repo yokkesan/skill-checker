@@ -85,8 +85,7 @@ class RepositoryController extends Controller
                 $repositories
             ),
 
-            'contributions' =>
-            [],
+            'contributions' =>[],
         ]);
     }
 
@@ -195,8 +194,7 @@ class RepositoryController extends Controller
                     ->first();
 
                 return [
-                    'id' =>
-                    $repository->id,
+                    'id' => $repository->id,
 
                     'repository_name' =>
                     $repository->repository_name,
@@ -220,6 +218,10 @@ class RepositoryController extends Controller
                         ->pluck('language')
                         ->toArray()
                         : [],
+
+                    'contributions' =>
+                    $snapshot?->contributions
+                        ?? [],
 
                     'analyzed_at' =>
                     $snapshot?->last_synced_at,
