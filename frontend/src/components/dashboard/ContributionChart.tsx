@@ -1,3 +1,5 @@
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, } from 'recharts';
+
 type Props = {
     contributions: Record<string, number>;
 };
@@ -5,75 +7,72 @@ type Props = {
 function ContributionChart({
     contributions,
 }: Props) {
+    const monthlyData = Object.entries(
+    contributions
+).reduce(
+    (result, [date, count]) => {
+        const month = date.slice(0, 7);
 
-    const days = [];
+        result[month] =
+            (result[month] ?? 0)
+            + Number(count);
 
-    for (let i = 150; i >= 0; i--) {
+        return result;
+    },
+    {} as Record<string, number>
+);
+
+    const chartData = [];
+
+    for (let i = 5; i >= 0; i--) {
         const date = new Date();
 
-        date.setDate(
-            date.getDate() - i
+        date.setMonth(
+            date.getMonth() - i
         );
 
-        const dateString =
-            date.toISOString().split('T')[0];
+        const key =
+            `${date.getFullYear()}-${String(
+                date.getMonth() + 1
+            ).padStart(2, '0')}`;
 
-        days.push({
-            date: dateString,
-            count: contributions[dateString] ?? 0,
+        chartData.push({
+            month:
+                `${String(
+                    date.getMonth() + 1
+                ).padStart(2, '0')}月`,
+            commits:
+                monthlyData[key] ?? 0,
         });
     }
 
     const totalCommits =
-        days.reduce(
-            (total, day) =>
-                total + day.count,
+        chartData.reduce(
+            (total, item) =>
+                total + item.commits,
             0
         );
 
-    const activeDays =
-        days.filter(
-            (day) => day.count > 0
+    const activeMonths =
+        chartData.filter(
+            (item) => item.commits > 0
         ).length;
 
-    const months = days.reduce(
-        (result, day, index) => {
+    const averageCommits =
+    activeMonths > 0
+        ? Math.round(
+            totalCommits /
+            activeMonths
+        )
+        : 0;
 
-            const date =
-                new Date(day.date);
-
-            const month =
-                `${date.getMonth() + 1}月`;
-
-            const key =
-                `${date.getFullYear()}-${date.getMonth() + 1}`;
-
-            const weekIndex =
-                Math.floor(index / 7);
-
-            const exists =
-                result.some(
-                    (item) =>
-                        item.key === key
-                );
-
-            if (!exists) {
-                result.push({
-                    key,
-                    month,
-                    index: weekIndex,
-                });
-            }
-
-            return result;
-
-        },
-        [] as {
-            key: string;
-            month: string;
-            index: number;
-        }[]
-    );
+    const maxCommits =
+        Math.max(
+            ...chartData.map(
+                (item) => item.commits
+            ),
+            0
+        );
 
     return (
         <section className="dashboard-card dashboard__contribution">
@@ -82,46 +81,27 @@ function ContributionChart({
             </h2>
 
             <div className="contribution-layout">
-
                 <div className="contribution-main">
-
-                    <div className="contribution-months">
-                        {months.map((month) => (
-                            <span
-                                key={month.key}
-                                style={{
-                                    left:
-                                        `${month.index * 18}px`,
-                                }}
-                            >
-                                {month.month}
-                            </span>
-                        ))}
-                    </div>
-
                     <div className="contribution-content">
-
                         <div className="contribution-chart">
-                            {days.map((day) => {
+                            <ResponsiveContainer
+                                width="100%"
+                                height={260}
+                            >
+                                <LineChart data={chartData} >
+                                    <CartesianGrid strokeDasharray="3 3" />
 
-                                const level =
-                                    Math.min(
-                                        day.count,
-                                        4
-                                    );
+                                    <XAxis dataKey="month" />
 
-                                return (
-                                    <div
-                                        key={day.date}
-                                        className={`contribution-chart__cell contribution-chart__cell--level-${level}`}
-                                        title={`${day.date}: ${day.count} commits`}
-                                    />
-                                );
-                            })}
+                                    <YAxis allowDecimals={false} />
+
+                                    <Tooltip />
+
+                                    <Line type="monotone" dataKey="commits" stroke="#22c55e" strokeWidth={3} dot />
+                                </LineChart>
+                            </ResponsiveContainer>
                         </div>
-
                     </div>
-
                 </div>
 
                 <div className="contribution-summary">
@@ -138,18 +118,36 @@ function ContributionChart({
 
                     <div className="contribution-summary__item">
                         <span>
-                            アクティブ日数
+                            アクティブ月数
                         </span>
 
                         <strong>
-                            {activeDays}
+                            {activeMonths}
+                        </strong>
+                    </div>
+
+                    <div className="contribution-summary__item">
+                        <span>
+                            月平均コミット
+                        </span>
+
+                        <strong>
+                            {averageCommits}
+                        </strong>
+                    </div>
+
+                    <div className="contribution-summary__item">
+                        <span>
+                            最大コミット数
+                        </span>
+
+                        <strong>
+                            {maxCommits}
                         </strong>
                     </div>
 
                 </div>
-
             </div>
-
         </section>
     );
 }

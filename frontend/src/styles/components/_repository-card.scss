@@ -25,6 +25,7 @@
 }
 
 .repository-table__row {
+    cursor: pointer;
     display: grid;
 
     grid-template-columns:
