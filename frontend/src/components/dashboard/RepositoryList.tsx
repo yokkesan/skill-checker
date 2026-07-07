@@ -39,6 +39,11 @@ function RepositoryList({
                     <div
                         key={repository.id}
                         className="repository-table__row"
+                        onClick={() =>
+                            navigate(
+                                `/repositories/${repository.id}`
+                            )
+                        }
                     >
                         <div className="repository-table__repository">
                             <div className="repository-table__icon">
@@ -81,6 +86,9 @@ function RepositoryList({
                                 href={repository.github_url}
                                 target="_blank"
                                 rel="noreferrer"
+                                onClick={(e) =>
+                                    e.stopPropagation()
+                                }
                             >
                                 <ExternalLinkIcon />
                             </a>
@@ -88,13 +96,15 @@ function RepositoryList({
                             <div className="repository-table__menu">
                                 <button
                                     type="button"
-                                    onClick={() =>
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+
                                         setOpenMenuId(
                                             openMenuId === repository.id
                                                 ? null
                                                 : repository.id
-                                        )
-                                    }
+                                        );
+                                    }}
                                 >
                                     <MoreVerticalIcon />
                                 </button>
@@ -103,39 +113,51 @@ function RepositoryList({
                                     <div className="repository-table__dropdown">
                                         <button
                                             type="button"
-                                            onClick={() =>
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+
                                                 navigate(
                                                     `/repositories/${repository.id}`
-                                                )
-                                            }
+                                                );
+                                            }}
                                         >
                                             詳細を見る
                                         </button>
 
                                         <button
                                             type="button"
-                                            onClick={async () => {
-                                                const confirmed = window.confirm(
-                                                    'このリポジトリを削除しますか？'
-                                                );
+                                            onClick={async (e) => {
+                                                e.stopPropagation();
+
+                                                const confirmed =
+                                                    window.confirm(
+                                                        'このリポジトリを削除しますか？'
+                                                    );
 
                                                 if (!confirmed) {
                                                     return;
                                                 }
 
-                                                const response = await fetch(
-                                                    `${import.meta.env.VITE_API_URL}/repositories/${repository.id}`,
-                                                    {
-                                                        method: 'DELETE',
-                                                    }
-                                                );
+                                                const response =
+                                                    await fetch(
+                                                        `${import.meta.env.VITE_API_URL}/repositories/${repository.id}`,
+                                                        {
+                                                            method: 'DELETE',
+                                                        }
+                                                    );
 
                                                 if (!response.ok) {
-                                                    alert('削除に失敗しました。');
+                                                    alert(
+                                                        '削除に失敗しました。'
+                                                    );
                                                     return;
                                                 }
+
                                                 setOpenMenuId(null);
-                                                alert('削除しました。');
+
+                                                alert(
+                                                    '削除しました。'
+                                                );
                                             }}
                                         >
                                             削除
