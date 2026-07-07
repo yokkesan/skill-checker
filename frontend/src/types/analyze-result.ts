@@ -1,6 +1,7 @@
 export type AnalysisDetail = {
     category: string;
     score: number;
+    maxScore: number;
     message: string;
 };
 

@@ -180,35 +180,54 @@ function RepositoryDetail() {
                     </div>
                 </section>
 
-                <section className="dashboard-card">
-                    <h2 className="dashboard-card__title">
-                        Analysis Result
-                    </h2>
+                    <section className="dashboard-card">
+                        <h2 className="dashboard-card__title">
+                            Analysis Result
+                        </h2>
 
-                    {analysisResult ? (
-                        <div>
+                        {analysisResult ? (
+                            analysisResult.details.map((detail) => {
 
-                            <p> Framework : {analysisResult.framework} </p>
+                                const rate =
+                                    detail.score / detail.maxScore;
 
-                            <p> Total Score : {analysisResult.totalScore} </p>
+                                const scoreClass =
+                                    rate >= 0.8
+                                        ? 'analysis-score--good'
+                                        : rate >= 0.6
+                                            ? 'analysis-score--warning'
+                                            : 'analysis-score--danger';
 
-                            {analysisResult.details.map((detail) => (
-                                <div key={detail.category}>
+                                return (
+                                    <div
+                                        key={detail.category}
+                                        className="analysis-result-card"
+                                    >
+                                        <div className="analysis-result-card__header">
 
-                                    <p> {detail.category} : {detail.score}点 </p>
+                                            <h3>
+                                                {detail.category}
+                                            </h3>
 
-                                    <p> {detail.message} </p>
+                                            <span className={`analysis-score ${scoreClass}`} >
+                                                {detail.score}点
+                                            </span>
 
-                                </div>
-                            ))}
+                                        </div>
 
-                        </div>
-                    ) : (
-                        <div className="repository-detail__empty">
-                            まだ解析が実行されていません
-                        </div>
-                    )}
-                </section>
+                                        <p className="analysis-result-card__message">
+                                            {detail.message}
+                                        </p>
+
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <div className="repository-detail__empty">
+                                まだ解析が実行されていません
+                            </div>
+                        )}
+                    </section>
             </div>
             </>
         </AppLayout>
