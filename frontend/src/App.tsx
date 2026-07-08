@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import RepositoryDetail from './pages/RepositoryDetail';
+import AnalysisDetail from './pages/AnalysisDetail';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
 
                 <Route path="/repositories/:id" element={<RepositoryDetail />} />
+                <Route path="/analysis/:category" element={<AnalysisDetail />} />
             </Routes>
         </BrowserRouter>
     );
