@@ -11,7 +11,14 @@ class CheckDetail extends Model
         'skill_check_id',
         'category',
         'score',
-        'reason'
+        'max_score',
+        'message',
+        'reason',
+        'issues',
+    ];
+
+    protected $casts = [
+        'issues' => 'array',
     ];
 
     public function skillCheck(): BelongsTo

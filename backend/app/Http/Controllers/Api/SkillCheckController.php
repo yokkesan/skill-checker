@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use App\Models\Repository;
 use App\Models\SkillCheck;
+use App\Models\CheckDetail;
 
 class SkillCheckController extends Controller
 {
@@ -39,6 +40,34 @@ class SkillCheckController extends Controller
 
         $data =
             $response->json();
+
+        foreach (
+            $data['details'] ?? []
+            as $detail
+        ) {
+            CheckDetail::create([
+                'skill_check_id' =>
+                $skillCheck->id,
+
+                'category' =>
+                $detail['category'],
+
+                'score' =>
+                $detail['score'],
+
+                'max_score' =>
+                $detail['maxScore'],
+
+                'message' =>
+                $detail['message'],
+
+                'reason' =>
+                $detail['comment'],
+
+                'issues' =>
+                $detail['issues'],
+            ]);
+        }
 
         $skillCheck->update([
             'total_score' =>
