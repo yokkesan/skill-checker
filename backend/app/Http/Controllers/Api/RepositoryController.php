@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Repository;
 use App\Models\SkillCheck;
+use App\Models\CheckDetail;
 
 use App\Services\GithubRepositoryService;
 use App\Services\RepositorySyncService;
@@ -99,10 +100,49 @@ class RepositoryController extends Controller
         $snapshot =
             $repository->snapshot;
 
-        $score = SkillCheck::where( 'repository_id', $repository->id )
+        $latestSkillCheck =
+            SkillCheck::where(
+                'repository_id',
+                $repository->id
+            )
             ->orderByDesc('id')
-            ->value('total_score')
+            ->first();
+
+        $score =
+            $latestSkillCheck?->total_score
             ?? 0;
+
+        $details =
+            $latestSkillCheck
+            ? CheckDetail::where(
+                'skill_check_id',
+                $latestSkillCheck->id
+            )
+            ->get()
+            ->map(
+                fn($detail) => [
+                    'category' =>
+                    $detail->category,
+
+                    'score' =>
+                    $detail->score,
+
+                    'maxScore' =>
+                    $detail->max_score,
+
+                    'message' =>
+                    $detail->message,
+
+                    'comment' =>
+                    $detail->reason,
+
+                    'issues' =>
+                    $detail->issues ?? [],
+                ]
+            )
+            ->values()
+            ->toArray()
+            : [];
 
         return response()->json([
             'repository' => [
@@ -145,6 +185,11 @@ class RepositoryController extends Controller
 
                 'updated_at' =>
                 $snapshot?->last_pushed_at,
+            ],
+
+            'analysisResult' => [
+                'details' =>
+                $details,
             ],
         ]);
     }

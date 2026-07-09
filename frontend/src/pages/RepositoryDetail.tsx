@@ -43,11 +43,22 @@ function RepositoryDetail() {
             .then((response) =>
                 response.json()
             )
-            .then((data) =>
+            .then((data) => {
+
                 setRepository(
                     data.repository
-                )
-            );
+                );
+
+                if (
+                    data.analysisResult?.details
+                        ?.length
+                ) {
+                    setAnalysisResult(
+                        data.analysisResult
+                    );
+                }
+
+            });
     }, [id]);
 
     if (!repository) {
