@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -14,8 +13,13 @@ class LoginController extends Controller
         Request $request
     ) {
         $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'email' => [
+                'required',
+                'email',
+            ],
+            'password' => [
+                'required',
+            ],
         ]);
 
         $user = User::where(
@@ -32,20 +36,26 @@ class LoginController extends Controller
         ) {
             return response()->json([
                 'message' =>
-                    'Invalid credentials',
+                'Invalid credentials',
             ], 401);
         }
 
-        $token = Str::random(60);
-
-        $user->update([
-            'api_token' => $token,
-        ]);
+        $token =
+            $user
+            ->createToken(
+                'skill-checker'
+            )
+            ->plainTextToken;
 
         return response()->json([
-            'message' => 'Login success',
-            'token' => $token,
-            'user' => $user,
+            'message' =>
+            'Login success',
+
+            'token' =>
+            $token,
+
+            'user' =>
+            $user,
         ]);
     }
 }

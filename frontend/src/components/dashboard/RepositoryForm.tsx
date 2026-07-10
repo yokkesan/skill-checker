@@ -16,15 +16,29 @@ function RepositoryForm({
         event.preventDefault();
 
         try {
+
+            const token =
+                localStorage.getItem(
+                    'token'
+                );
+
             const response =
                 await fetch(
                     `${import.meta.env.VITE_API_URL}/repositories`,
                     {
                         method: 'POST',
+
                         headers: {
                             'Content-Type':
                                 'application/json',
+
+                            Authorization:
+                                `Bearer ${token}`,
+
+                            Accept:
+                                'application/json',
                         },
+
                         body: JSON.stringify({
                             github_url:
                                 githubUrl,
@@ -48,6 +62,7 @@ function RepositoryForm({
             setGithubUrl('');
 
             onSuccess();
+
         } catch (error) {
             console.error(error);
         }
@@ -59,21 +74,28 @@ function RepositoryForm({
                 Repository Register
             </h2>
 
-            <form onSubmit={ handleSubmit } className="repository-form" >
+            <form
+                onSubmit={handleSubmit}
+                className="repository-form"
+            >
                 <input
                     type="text"
                     placeholder="https://github.com/user/repository"
                     value={githubUrl}
                     onChange={(event) =>
                         setGithubUrl(
-                            event.target
-                                .value
+                            event.target.value
                         )
                     }
                     className="repository-form__input"
                 />
 
-                <button type="submit" className="repository-form__button" > 登録 </button>
+                <button
+                    type="submit"
+                    className="repository-form__button"
+                >
+                    登録
+                </button>
             </form>
         </section>
     );

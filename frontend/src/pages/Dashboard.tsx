@@ -21,9 +21,23 @@ function Dashboard() {
     const fetchRepositories =
         async () => {
             try {
+                const token =
+                    localStorage.getItem(
+                        'token'
+                    );
+
                 const response =
                     await fetch(
-                        `${import.meta.env.VITE_API_URL}/repositories`
+                        `${import.meta.env.VITE_API_URL}/repositories`,
+                        {
+                            headers: {
+                                Authorization:
+                                    `Bearer ${token}`,
+
+                                Accept:
+                                    'application/json',
+                            },
+                        }
                     );
 
                 const data =
@@ -64,11 +78,25 @@ function Dashboard() {
 
     const syncRepositories =
         async () => {
+
+            const token =
+                localStorage.getItem(
+                    'token'
+                );
+
             const response =
                 await fetch(
                     `${import.meta.env.VITE_API_URL}/repositories/sync`,
                     {
                         method: 'POST',
+
+                        headers: {
+                            Authorization:
+                                `Bearer ${token}`,
+
+                            Accept:
+                                'application/json',
+                        },
                     }
                 );
 

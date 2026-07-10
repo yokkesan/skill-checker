@@ -13,6 +13,13 @@ class SkillCheckController extends Controller
     public function analyze(
         Repository $repository
     ) {
+        if (
+            $repository->user_id
+            !== auth()->id()
+        ) {
+            abort(403);
+        }
+
         $response = Http::post(
             config('services.analyzer.url') . '/analyze',
             [

@@ -12,21 +12,50 @@ function RepositoryDetail() {
 
     const [repository, setRepository] = useState<Repository | null>(null);
 
-    const [analysisResult, setAnalysisResult] = useState<AnalyzeResult | null>(null);
+    const [analysisResult, setAnalysisResult] =
+        useState<AnalyzeResult | null>(null);
 
     const handleAnalyze = async () => {
+        const token =
+            localStorage.getItem(
+                'token'
+            );
+
         const response = await fetch(
             `${import.meta.env.VITE_API_URL}/repositories/${id}/analyze`,
-            { method: 'POST' }
+            {
+                method: 'POST',
+
+                headers: {
+                    Authorization:
+                        `Bearer ${token}`,
+
+                    Accept:
+                        'application/json',
+                },
+            }
         );
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
-        setAnalysisResult(data);
-
-        const repositoryResponse = await fetch(
-            `${import.meta.env.VITE_API_URL}/repositories/${id}`
+        setAnalysisResult(
+            data
         );
+
+        const repositoryResponse =
+            await fetch(
+                `${import.meta.env.VITE_API_URL}/repositories/${id}`,
+                {
+                    headers: {
+                        Authorization:
+                            `Bearer ${token}`,
+
+                        Accept:
+                            'application/json',
+                    },
+                }
+            );
 
         const repositoryData =
             await repositoryResponse.json();
@@ -37,8 +66,23 @@ function RepositoryDetail() {
     };
 
     useEffect(() => {
+
+        const token =
+            localStorage.getItem(
+                'token'
+            );
+
         fetch(
-            `${import.meta.env.VITE_API_URL}/repositories/${id}`
+            `${import.meta.env.VITE_API_URL}/repositories/${id}`,
+            {
+                headers: {
+                    Authorization:
+                        `Bearer ${token}`,
+
+                    Accept:
+                        'application/json',
+                },
+            }
         )
             .then((response) =>
                 response.json()
@@ -59,6 +103,7 @@ function RepositoryDetail() {
                 }
 
             });
+
     }, [id]);
 
     if (!repository) {

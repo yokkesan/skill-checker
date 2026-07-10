@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Repository;
 use App\Models\SkillCheck;
 use App\Models\CheckDetail;
-
 use App\Services\GithubRepositoryService;
 use App\Services\RepositorySyncService;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -41,7 +39,7 @@ class RepositoryController extends Controller
         $repository =
             Repository::create([
                 'user_id' =>
-                1,
+                auth()->id(),
 
                 'github_url' =>
                 $request->github_url,
@@ -78,6 +76,10 @@ class RepositoryController extends Controller
                 'snapshot.languages',
                 'skillChecks',
             ])
+            ->where(
+                'user_id',
+                auth()->id()
+            )
             ->get();
 
         return response()->json([
@@ -86,13 +88,18 @@ class RepositoryController extends Controller
                 $repositories
             ),
 
-            'contributions' =>[],
+            'contributions' => [],
         ]);
     }
 
     public function show(
         Repository $repository
     ) {
+        $this->authorize(
+            'view',
+            $repository
+        );
+
         $repository->load([
             'snapshot.languages',
         ]);
@@ -167,8 +174,8 @@ class RepositoryController extends Controller
                 'technologies' =>
                 $snapshot
                     ? $snapshot->languages
-                    ->pluck('language')
-                    ->toArray()
+                        ->pluck('language')
+                        ->toArray()
                     : [],
 
                 'description' =>
@@ -197,17 +204,27 @@ class RepositoryController extends Controller
     public function destroy(
         Repository $repository
     ) {
+        $this->authorize(
+            'delete',
+            $repository
+        );
+
         $repository->delete();
 
         return response()->json([
-            'message' => 'Repository deleted.',
+            'message' =>
+            'Repository deleted.',
         ]);
     }
 
     public function sync()
     {
         $repositories =
-            Repository::all();
+            Repository::where(
+                'user_id',
+                auth()->id()
+            )
+            ->get();
 
         foreach (
             $repositories as $repository
@@ -235,11 +252,12 @@ class RepositoryController extends Controller
 
                 $skillCheck =
                     $repository->skillChecks
-                    ->sortByDesc('id')
-                    ->first();
+                        ->sortByDesc('id')
+                        ->first();
 
                 return [
-                    'id' => $repository->id,
+                    'id' =>
+                    $repository->id,
 
                     'repository_name' =>
                     $repository->repository_name,
@@ -260,8 +278,8 @@ class RepositoryController extends Controller
                     'technologies' =>
                     $snapshot
                         ? $snapshot->languages
-                        ->pluck('language')
-                        ->toArray()
+                            ->pluck('language')
+                            ->toArray()
                         : [],
 
                     'contributions' =>

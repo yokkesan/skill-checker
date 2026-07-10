@@ -7,14 +7,26 @@ use App\Http\Controllers\Api\SkillCheckController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\LoginController;
 
-Route::post( '/repositories', [RepositoryController::class, 'store'] );
+Route::post('/register', [RegisterController::class, 'store']);
+Route::post('/login', [LoginController::class, 'login']);
 
-Route::get( '/repositories', [RepositoryController::class, 'index'] );
+Route::middleware('auth:sanctum')->group(function () {
 
-Route::post( '/repositories/{repository}/analyze', [SkillCheckController::class, 'analyze'] );
-Route::get( '/repositories/{repository}', [RepositoryController::class, 'show'] );
-Route::delete( '/repositories/{repository}', [RepositoryController::class, 'destroy'] );
-Route::post( '/repositories/sync', [RepositoryController::class, 'sync'] );
+    Route::post('/repositories', [RepositoryController::class, 'store']);
 
-Route::post( '/register', [RegisterController::class, 'store'] );
-Route::post( '/login', [LoginController::class, 'login'] );
+    Route::get('/repositories', [RepositoryController::class, 'index']);
+
+    Route::get('/repositories/{repository}', [RepositoryController::class, 'show']);
+
+    Route::delete('/repositories/{repository}', [RepositoryController::class, 'destroy']);
+
+    Route::post(
+        '/repositories/{repository}/analyze',
+        [SkillCheckController::class, 'analyze']
+    );
+
+    Route::post(
+        '/repositories/sync',
+        [RepositoryController::class, 'sync']
+    );
+});
