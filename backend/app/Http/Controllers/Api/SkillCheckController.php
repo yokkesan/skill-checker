@@ -20,13 +20,20 @@ class SkillCheckController extends Controller
             abort(403);
         }
 
-        $response = Http::post(
-            config('services.analyzer.url') . '/analyze',
-            [
-                'repositoryId' => $repository->id,
-                'githubUrl' => $repository->github_url,
-            ]
-        );
+        $response = Http::withHeaders([
+            'X-API-KEY' =>
+            config('services.analyzer.key'),
+        ])
+            ->post(
+                config('services.analyzer.url') . '/analyze',
+                [
+                    'repositoryId' =>
+                    $repository->id,
+
+                    'githubUrl' =>
+                    $repository->github_url,
+                ]
+            );
 
         $skillCheck =
             SkillCheck::create([

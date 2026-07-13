@@ -13,6 +13,8 @@ services:
       - db
     tty: true
     command: php artisan serve --host=0.0.0.0 --port=8000
+    networks:
+      - skillchecker-network
 
   frontend:
     build:
@@ -28,6 +30,8 @@ services:
       - backend
     tty: true
     command: npm run dev -- --host
+    networks:
+      - skillchecker-network
 
   db:
     image: mysql:8.0
@@ -43,6 +47,12 @@ services:
       --collation-server=utf8mb4_unicode_ci
     volumes:
       - db-data:/var/lib/mysql
+    networks:
+      - skillchecker-network
 
 volumes:
   db-data:
+
+networks:
+  skillchecker-network:
+    external: true
