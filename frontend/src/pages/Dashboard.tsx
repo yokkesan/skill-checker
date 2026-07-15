@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import '../styles/main.scss';
 import AppLayout from '../components/layout/AppLayout';
@@ -17,6 +18,9 @@ function Dashboard() {
 
     const [contributions, setContributions] =
         useState<Record<string, number>>({});
+
+    const navigate =
+        useNavigate();
 
     const fetchRepositories =
         async () => {
@@ -39,6 +43,31 @@ function Dashboard() {
                             },
                         }
                     );
+
+                if (
+                    response.status === 401
+                ) {
+                    localStorage.removeItem(
+                        'token'
+                    );
+
+                    navigate(
+                        '/login'
+                    );
+
+                    return;
+                }
+
+                if (
+                    !response.ok
+                ) {
+                    console.error(
+                        'API Error',
+                        response.status
+                    );
+
+                    return;
+                }
 
                 const data =
                     await response.json();
@@ -100,14 +129,33 @@ function Dashboard() {
                     }
                 );
 
+            if (
+                response.status === 401
+            ) {
+                localStorage.removeItem(
+                    'token'
+                );
+
+                navigate(
+                    '/login'
+                );
+
+                return;
+            }
+
             if (!response.ok) {
-                alert('同期に失敗しました。');
+                alert(
+                    '同期に失敗しました。'
+                );
+
                 return;
             }
 
             await fetchRepositories();
 
-            alert('同期しました。');
+            alert(
+                '同期しました。'
+            );
         };
 
     useEffect(() => {
