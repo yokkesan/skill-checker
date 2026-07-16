@@ -16,6 +16,10 @@
     width: 100%;
 }
 
+.contribution-chart-scroll {
+    width: 100%;
+}
+
 .contribution-chart {
     width: 100%;
 
@@ -55,4 +59,53 @@
     font-size: 40px;
 
     font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .contribution-layout {
+        flex-direction: column;
+
+        gap: 32px;
+    }
+
+    .contribution-chart-scroll {
+        overflow-x: auto;
+
+        overflow-y: hidden;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .contribution-chart {
+        min-width: 560px;
+
+        height: 260px;
+    }
+
+    .contribution-summary {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 20px;
+
+        min-width: 0;
+    }
+
+    .contribution-summary__item strong {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contribution-summary {
+        gap: 16px;
+    }
+
+    .contribution-summary__item span {
+        font-size: 12px;
+    }
+
+    .contribution-summary__item strong {
+        font-size: 28px;
+    }
 }
